@@ -25,7 +25,7 @@ public class SalesSlip {
 		int l = salesArray.size();
 		int total=0;
 		for(int i=0; i<l;i++) {
-			int itemCost = salesArray.get(i).getCost()*salesArray.get(i).getQuantity();
+			float itemCost = salesArray.get(i).getCost()*salesArray.get(i).getQuantity();
 			total+=itemCost;
 		}
 		

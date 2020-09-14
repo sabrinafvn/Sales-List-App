@@ -20,6 +20,8 @@ public class SalesApp {
 	private JTextField totalOutput;
 	private JButton addItemButton;
 	private JTextArea SalesListOutput;
+	private JButton totalButton;
+	private SalesSlip newSale;
 
 	/**
 	 * Launch the application.
@@ -106,13 +108,17 @@ public class SalesApp {
 		scrollPane_1.setViewportView(SalesListOutput);
 		
 		JLabel totalSaleLabel = new JLabel("Total Sales");
-		totalSaleLabel.setBounds(74, 252, 96, 16);
+		totalSaleLabel.setBounds(158, 252, 96, 16);
 		frame.getContentPane().add(totalSaleLabel);
 		
 		totalOutput = new JTextField();
-		totalOutput.setBounds(163, 247, 181, 26);
+		totalOutput.setBounds(248, 247, 181, 26);
 		frame.getContentPane().add(totalOutput);
 		totalOutput.setColumns(10);
+		
+		totalButton = new JButton("Compute Total");
+		totalButton.setBounds(25, 247, 117, 29);
+		frame.getContentPane().add(totalButton);
 	}
 	
 	private void createEvents() {
@@ -124,35 +130,58 @@ public class SalesApp {
 			}
 				
 				);
+		
+		//button for Total Sales
+		totalButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deliverTotal();
+		}
+				
+			}
+				
+				);
+		
+		
+		
 	}
 	
 	private void buildOutput() {
 		//Every time Button is pressed, add item to list in SalesSlip
 		
 		//Instantiate Sales Slip object
-		SalesSlip newSale = new SalesSlip();
+		newSale = new SalesSlip();
+		
+		//instantiate new arrayList from sales slip
+		ArrayList<SalesItem> salesList = newSale.buildSalesList();
+		
+		
 		
 		//Cost + Quantity Input to integer
-		int cost = Integer.parseInt(costField.getText());
+		float cost = Float.parseFloat(costField.getText());
 		int quantity = Integer.parseInt(quantityField.getText());
 		
 		//turn input into a sales Item
 		SalesItem item = new SalesItem(itemField.getText(),cost,quantity);
 		
 		//Add Sales Item to List in Slip
-		newSale.addSalesItem(item);
+		salesList.add(item);
 	
 		//Display newSale Items
 		
 		//Call Upon SalesSlip array
-		ArrayList<SalesItem> si = newSale.getSalesArray();
 		
-		for(SalesItem s : si){
+		StringBuilder b = new StringBuilder();
+		for(SalesItem s : salesList){
 			SalesListOutput.append(s + "\n");
+			b.append(s.getItem() + "        " + "$"+ s.getCost() +"          " + s.getQuantity()+"\n");
 			}
+		SalesListOutput.setText(b.toString());
 		
 		
-		//Calculate Total Items
+	}
+	
+	
+	public void deliverTotal() {
 		int total = newSale.computeTotal();
 		//Convert Int to String
 		String totalS = Integer.toString(total);
@@ -160,9 +189,5 @@ public class SalesApp {
 		
 		//Display Sales total to output field
 		totalOutput.setText(totalS);
-		
-		
-		
-	
 	}
 }
