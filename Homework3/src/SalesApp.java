@@ -22,13 +22,14 @@ public class SalesApp {
 	private JTextArea SalesListOutput;
 	private JButton totalButton;
 	private SalesSlip newSale;
+	private ArrayList<SalesItem> salesList;
 
 	/**
 	 * Launch the application.
 	 */
 	/**
 	 * @author Sabrina Nunn
-	 * @version 1.0
+	 * @version 1.0 
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -119,6 +120,9 @@ public class SalesApp {
 		totalButton = new JButton("Compute Total");
 		totalButton.setBounds(25, 247, 117, 29);
 		frame.getContentPane().add(totalButton);
+		
+		newSale = new SalesSlip();
+		salesList = newSale.buildSalesList();
 	}
 	
 	private void createEvents() {
@@ -149,13 +153,10 @@ public class SalesApp {
 		//Every time Button is pressed, add item to list in SalesSlip
 		
 		//Instantiate Sales Slip object
-		newSale = new SalesSlip();
+		//newSale = new SalesSlip();
 		
 		//instantiate new arrayList from sales slip
-		ArrayList<SalesItem> salesList = newSale.buildSalesList();
-		
-		
-		
+	
 		//Cost + Quantity Input to integer
 		float cost = Float.parseFloat(costField.getText());
 		int quantity = Integer.parseInt(quantityField.getText());
@@ -182,9 +183,9 @@ public class SalesApp {
 	
 	
 	public void deliverTotal() {
-		int total = newSale.computeTotal();
+		float total = newSale.computeTotal();
 		//Convert Int to String
-		String totalS = Integer.toString(total);
+		String totalS = Float.toString(total);
 		
 		
 		//Display Sales total to output field

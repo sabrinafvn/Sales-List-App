@@ -20,10 +20,10 @@ public class SalesSlip {
 	}
 	
 	//Compute + Return total sales
-	public int computeTotal() {
+	public float computeTotal() {
 		
 		int l = salesArray.size();
-		int total=0;
+		float total=0;
 		for(int i=0; i<l;i++) {
 			float itemCost = salesArray.get(i).getCost()*salesArray.get(i).getQuantity();
 			total+=itemCost;
